@@ -5,11 +5,13 @@ verify_ssl = true
 
 [dev-packages]
 
+
 [packages]
 django = "*"
 djangorestframework = "*"
 django-filter = "*"
 psycopg2-binary = "*"
+pytest-django = "*"
 
 [requires]
 python_version = "3.7"
