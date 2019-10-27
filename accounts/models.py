@@ -13,3 +13,14 @@ class Grade(models.Model):
 
     class Meta:
         ordering = ("level",)
+
+
+class Location(models.Model):
+    name = models.CharField(max_length=25)
+    abbreviation = models.CharField(max_length=2)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ("name",)
