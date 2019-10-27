@@ -1,5 +1,5 @@
 import pytest
-from accounts.models import Grade
+from accounts.models import Grade, Location
 from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 
@@ -54,3 +54,32 @@ def test_grade_name_is_required():
     with pytest.raises(ValidationError):
         grade = Grade.objects.create(level=0)
         grade.full_clean()
+
+
+@pytest.fixture
+def location():
+    return Location.objects.create(abbreviation="CA", name="California")
+
+
+def test_location_name_max_length(location):
+    with pytest.raises(ValidationError):
+        location.name = "x" * 26
+        location.full_clean()
+
+
+def test_location_abbreviation_max_length(location):
+    with pytest.raises(ValidationError):
+        location.abbreviation = "x" * 3
+        location.full_clean()
+
+
+def test_location_name_is_required():
+    with pytest.raises(ValidationError):
+        location = Location.objects.create(abbreviation="CA")
+        location.full_clean()
+
+
+def test_location_abbreviation_is_required():
+    with pytest.raises(ValidationError):
+        location = Location.objects.create(name="California")
+        location.full_clean()
