@@ -24,3 +24,13 @@ class Location(models.Model):
 
     class Meta:
         ordering = ("name",)
+
+
+class OrgType(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ("name",)
