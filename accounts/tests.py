@@ -1,5 +1,5 @@
 import pytest
-from accounts.models import Grade, Location
+from accounts.models import Grade, Location, OrgType
 from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 
@@ -83,3 +83,20 @@ def test_location_abbreviation_is_required():
     with pytest.raises(ValidationError):
         location = Location.objects.create(name="California")
         location.full_clean()
+
+
+@pytest.fixture
+def org_type():
+    return OrgType.objects.create(name="charter management organization")
+
+
+def test_org_type_max_length(org_type):
+    with pytest.raises(ValidationError):
+        org_type.name = "x" * 51
+        org_type.full_clean()
+
+
+def test_org_type_name_is_required():
+    with pytest.raises(ValidationError):
+        org_type = OrgType.objects.create(name="")
+        org_type.full_clean()
