@@ -39,7 +39,7 @@ class OrgType(models.Model):
 
 class Organization(models.Model):
     name = models.CharField(max_length=50)
-    size = models.IntegerField(null=True)
+    size = models.IntegerField(null=True, blank=True)
     grades = models.ManyToManyField(Grade)
     locations = models.ManyToManyField(Location)
     org_type = models.ForeignKey(OrgType, on_delete=models.PROTECT)
