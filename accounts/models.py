@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.db import models
+from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
@@ -53,3 +54,21 @@ class Organization(models.Model):
 
 class OrganizationAdmin(admin.ModelAdmin):
     list_filter = ("grades", "locations", "org_type")
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.PROTECT)
+    github_id = models.CharField(max_length=39)
+    organization = models.ForeignKey(Organization, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        ordering = ("user",)
+
+
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ("user", "organization")
+    list_filter = ("organization",)
+    search_fields = ["user", "organization"]
