@@ -62,6 +62,10 @@ def location():
     return Location.objects.create(abbreviation="CA", name="California")
 
 
+def test_location_string_representation(location):
+    assert str(location) == location.name
+
+
 def test_location_name_max_length(location):
     with pytest.raises(ValidationError):
         location.name = "x" * 26
@@ -91,6 +95,10 @@ def org_type():
     return OrgType.objects.create(name="charter management organization")
 
 
+def test_org_type_string_representation(org_type):
+    assert str(org_type) == org_type.name
+
+
 def test_org_type_max_length(org_type):
     with pytest.raises(ValidationError):
         org_type.name = "x" * 51
@@ -117,6 +125,10 @@ def organization(location, org_type):
     organization.grades.set(grades)
     organization.save()
     return organization
+
+
+def test_organization_string_representation(organization):
+    assert str(organization) == organization.name
 
 
 def test_organization_name_max_length(organization):
@@ -150,7 +162,3 @@ def test_org_type_is_required():
 def test_organization_size_is_not_required(org_type):
     organization = Organization.objects.create(name="Test Org 3", org_type=org_type)
     organization.full_clean()
-
-
-def test_organization_string_representation(organization):
-    assert str(organization) == organization.name
