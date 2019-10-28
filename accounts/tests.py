@@ -1,7 +1,8 @@
 import pytest
-from accounts.models import Grade, Location, OrgType
+from accounts.models import Grade, Location, OrgType, Organization
 from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
+from django.db.models.deletion import ProtectedError
 
 pytestmark = pytest.mark.django_db
 
@@ -100,3 +101,56 @@ def test_org_type_name_is_required():
     with pytest.raises(ValidationError):
         org_type = OrgType.objects.create(name="")
         org_type.full_clean()
+
+
+@pytest.fixture
+def organization(location, org_type):
+    # create test grades for HS (9-12)
+    for grade in range(9, 13):
+        Grade.objects.create(level=grade, name=f"{grade}")
+
+    grades = Grade.objects.filter(level__gte=9)
+    organization = Organization.objects.create(
+        name="Test Organization", size=12, org_type=org_type
+    )
+
+    organization.grades.set(grades)
+    organization.save()
+    return organization
+
+
+def test_organization_name_max_length(organization):
+    with pytest.raises(ValidationError):
+        organization.name = "x" * 51
+        organization.full_clean()
+
+
+def test_organization_size_can_be_null(organization):
+    organization.size = None
+    organization.full_clean()
+
+
+def test_organization_name_is_required(org_type):
+    with pytest.raises(ValidationError):
+        organization = Organization.objects.create(size=10, org_type=org_type)
+        organization.full_clean()
+
+
+def test_org_type_protected_delete(organization, org_type):
+    with pytest.raises(ProtectedError):
+        org_type.delete()
+
+
+def test_org_type_is_required():
+    with pytest.raises(IntegrityError):
+        organization = Organization.objects.create(size=10, name="Test Org 2")
+        organization.full_clean()
+
+
+def test_organization_size_is_not_required(org_type):
+    organization = Organization.objects.create(name="Test Org 3", org_type=org_type)
+    organization.full_clean()
+
+
+def test_organization_string_representation(organization):
+    assert str(organization) == organization.name
