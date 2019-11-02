@@ -1,5 +1,6 @@
 import pytest
-from accounts.models import Grade, Location, OrgType, Organization
+from accounts.models import Grade, Location, OrgType, Organization, Profile
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 from django.db.models.deletion import ProtectedError
@@ -162,3 +163,36 @@ def test_org_type_is_required():
 def test_organization_size_is_not_required(org_type):
     organization = Organization.objects.create(name="Test Org 3", org_type=org_type)
     organization.full_clean()
+
+
+@pytest.fixture
+def user():
+    return User.objects.create_user("test_user", password="Testpassword")
+
+
+@pytest.fixture
+def profile(user, organization):
+    return Profile.objects.create(
+        user=user, github_id="test_user", organization=organization
+    )
+
+
+def test_profile_string_representation(profile):
+    assert str(profile) == profile.user.username
+
+
+def test_profile_github_id_max_length(profile):
+    with pytest.raises(ValidationError):
+        profile.github_id = "x" * 40
+        profile.full_clean()
+
+
+def test_profile_organization_is_required(profile):
+    with pytest.raises(ValidationError):
+        profile.organization = None
+        profile.full_clean()
+
+def test_profile_user_is_required(profile):
+    with pytest.raises(ValidationError):
+        profile.user = None
+        profile.full_clean()
