@@ -1,0 +1,23 @@
+[
+    {
+        "model": "accounts.orgtype",
+        "pk": 1,
+        "fields": {
+            "name": "Public School District"
+        }
+    },
+    {
+        "model": "accounts.orgtype",
+        "pk": 2,
+        "fields": {
+            "name": "Charter School Management Organization"
+        }
+    },
+    {
+        "model": "accounts.orgtype",
+        "pk": 3,
+        "fields": {
+            "name": "Private School"
+        }
+    }
+]

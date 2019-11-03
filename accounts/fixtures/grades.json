@@ -1,0 +1,114 @@
+[
+    {
+        "model": "accounts.grade",
+        "pk": 1,
+        "fields": {
+            "level": -1,
+            "name": "TK"
+        }
+    },
+    {
+        "model": "accounts.grade",
+        "pk": 2,
+        "fields": {
+            "level": 0,
+            "name": "K"
+        }
+    },
+    {
+        "model": "accounts.grade",
+        "pk": 3,
+        "fields": {
+            "level": 1,
+            "name": "1"
+        }
+    },
+    {
+        "model": "accounts.grade",
+        "pk": 4,
+        "fields": {
+            "level": 2,
+            "name": "2"
+        }
+    },
+    {
+        "model": "accounts.grade",
+        "pk": 5,
+        "fields": {
+            "level": 3,
+            "name": "3"
+        }
+    },
+    {
+        "model": "accounts.grade",
+        "pk": 6,
+        "fields": {
+            "level": 4,
+            "name": "4"
+        }
+    },
+    {
+        "model": "accounts.grade",
+        "pk": 7,
+        "fields": {
+            "level": 5,
+            "name": "5"
+        }
+    },
+    {
+        "model": "accounts.grade",
+        "pk": 8,
+        "fields": {
+            "level": 6,
+            "name": "6"
+        }
+    },
+    {
+        "model": "accounts.grade",
+        "pk": 9,
+        "fields": {
+            "level": 7,
+            "name": "7"
+        }
+    },
+    {
+        "model": "accounts.grade",
+        "pk": 10,
+        "fields": {
+            "level": 8,
+            "name": "8"
+        }
+    },
+    {
+        "model": "accounts.grade",
+        "pk": 11,
+        "fields": {
+            "level": 9,
+            "name": "9"
+        }
+    },
+    {
+        "model": "accounts.grade",
+        "pk": 12,
+        "fields": {
+            "level": 10,
+            "name": "10"
+        }
+    },
+    {
+        "model": "accounts.grade",
+        "pk": 13,
+        "fields": {
+            "level": 11,
+            "name": "11"
+        }
+    },
+    {
+        "model": "accounts.grade",
+        "pk": 14,
+        "fields": {
+            "level": 12,
+            "name": "12"
+        }
+    }
+]
