@@ -1,5 +1,5 @@
 import pytest
-from inventory.models import Domain, Subject, Product
+from inventory.models import Domain, Subject, Product, UsageType
 from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 from django.db.models.deletion import ProtectedError
@@ -72,3 +72,18 @@ def test_product_protects_deleting_domain(product, domain):
 def test_product_protects_deleting_subject(product, subject):
     with pytest.raises(ProtectedError):
         subject.delete()
+
+
+@pytest.fixture
+def usage_type():
+    return UsageType.objects.create(name="Test Usage Type")
+
+
+def test_usage_type_string_representation(usage_type):
+    assert str(usage_type) == usage_type.name
+
+
+def test_usage_type_name_max_length(usage_type):
+    with pytest.raises(ValidationError):
+        usage_type.name = "x" * 26
+        usage_type.full_clean()
