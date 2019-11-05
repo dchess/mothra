@@ -38,3 +38,13 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ("domain", "subject")
     list_display = ("name", "domain", "subject")
     search_fields = ["name"]
+
+
+class UsageType(models.Model):
+    name = models.CharField(max_length=25)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ("name",)
