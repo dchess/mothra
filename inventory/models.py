@@ -58,13 +58,13 @@ class Usage(models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.PROTECT)
     reviewer = models.ForeignKey(User, on_delete=models.PROTECT)
     can_push = models.BooleanField()
-    how_push = models.TextField()
+    how_push = models.TextField(blank=True, null=True)
     can_pull = models.BooleanField()
-    how_pull = models.TextField()
+    how_pull = models.TextField(blank=True, null=True)
     usage_type = models.ForeignKey(UsageType, on_delete=models.PROTECT)
     is_deprecated = models.BooleanField()
-    when_deprecated = models.DateField(default=date.today)
-    why_deprecated = models.TextField()
+    when_deprecated = models.DateField(blank=True, null=True)
+    why_deprecated = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.organization} - {self.product}"
