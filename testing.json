@@ -1,0 +1,110 @@
+[
+    {
+        "model": "accounts.grade",
+        "pk": 1,
+        "fields": {
+            "level": 0,
+            "name": "K"
+        }
+    },
+    {
+        "model": "accounts.grade",
+        "pk": 2,
+        "fields": {
+            "level": 1,
+            "name": "1"
+        }
+    },
+    {
+        "model": "accounts.location",
+        "pk": 1,
+        "fields": {
+            "name": "California",
+            "abbreviation": "CA"
+        }
+    },
+    {
+        "model": "accounts.orgtype",
+        "pk": 1,
+        "fields": {
+            "name": "Charter Management Organization"
+        }
+    },
+    {
+        "model": "accounts.organization",
+        "pk": 1,
+        "fields": {
+            "name": "Test Organization",
+            "org_type": 1,
+            "size": 12,
+            "locations": [
+                1
+            ],
+            "grades": [
+                1,
+                2
+            ]
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$100000$kGH9JTSNboqT$vDQwd/ntedfHV8TupSWTPa9AaqG7NPUxzcNXdjkpnvM=",
+            "username": "test_user",
+            "email": "test.user@example.com"
+        }
+    },
+    {
+        "model": "accounts.profile",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "organization": 1,
+            "github_id": "test_user"
+        }
+    },
+    {
+        "model": "inventory.domain",
+        "pk": 1,
+        "fields": {
+            "name": "Test Domain"
+        }
+    },
+    {
+        "model": "inventory.subject",
+        "pk": 1,
+        "fields": {
+            "name": "Test Subject"
+        }
+    },
+    {
+        "model": "inventory.product",
+        "pk": 1,
+        "fields": {
+            "name": "Test Product",
+            "domain": 1,
+            "subject": 1
+        }
+    },
+    {
+        "model": "inventory.usagetype",
+        "pk": 1,
+        "fields": {
+            "name": "Test Usage Type"
+        }
+    },
+    {
+        "model": "inventory.usage",
+        "pk": 1,
+        "fields": {
+            "product": 1,
+            "organization": 1,
+            "reviewer": 1,
+            "can_push": true,
+            "can_pull": true,
+            "usage_type": 1,
+            "is_deprecated": false
+        }
+    }
+]

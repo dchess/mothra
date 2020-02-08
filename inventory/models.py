@@ -28,7 +28,9 @@ class Subject(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=100)
     domain = models.ForeignKey(Domain, on_delete=models.PROTECT)
-    subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
+    subject = models.ForeignKey(
+        Subject, on_delete=models.PROTECT, null=True, blank=True
+    )
 
     def __str__(self):
         return self.name

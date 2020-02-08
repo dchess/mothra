@@ -1,15 +1,16 @@
+from datetime import date
 import pytest
-from inventory.models import Domain, Subject, Product, UsageType
+from inventory.models import Domain, Subject, Product, UsageType, Usage
+from django.contrib.auth.models import User
+from accounts.models import Organization
 from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 from django.db.models.deletion import ProtectedError
 
-pytestmark = pytest.mark.django_db
 
-
-@pytest.fixture
+@pytest.fixture(autouse=True)
 def domain():
-    return Domain.objects.create(name="Test Domain")
+    return Domain.objects.get(pk=1)
 
 
 def test_domain_string_representation(domain):
@@ -24,7 +25,7 @@ def test_domain_name_max_length(domain):
 
 @pytest.fixture
 def subject():
-    return Subject.objects.create(name="Test Subject")
+    return Subject.objects.get(pk=1)
 
 
 def test_subject_string_representation(subject):
@@ -37,9 +38,9 @@ def test_subject_name_max_length(subject):
         subject.full_clean()
 
 
-@pytest.fixture
-def product(domain, subject):
-    return Product.objects.create(name="Test Product", domain=domain, subject=subject)
+@pytest.fixture(autouse=True)
+def product():
+    return Product.objects.get(pk=1)
 
 
 def test_product_string_representation(product):
@@ -58,10 +59,9 @@ def test_product_requires_domain(product, subject):
         product.full_clean()
 
 
-def test_product_requires_subject(product, domain):
-    with pytest.raises(IntegrityError):
-        product = Product.objects.create(name="Test Product 3", domain=domain)
-        product.full_clean()
+def test_product_subject_can_be_null(product, domain):
+    product.subject = None
+    product.full_clean()
 
 
 def test_product_protects_deleting_domain(product, domain):
@@ -76,7 +76,7 @@ def test_product_protects_deleting_subject(product, subject):
 
 @pytest.fixture
 def usage_type():
-    return UsageType.objects.create(name="Test Usage Type")
+    return UsageType.objects.get(pk=1)
 
 
 def test_usage_type_string_representation(usage_type):
@@ -87,3 +87,13 @@ def test_usage_type_name_max_length(usage_type):
     with pytest.raises(ValidationError):
         usage_type.name = "x" * 26
         usage_type.full_clean()
+
+
+@pytest.fixture(autouse=True)
+def usage():
+    return Usage.objects.get(pk=1)
+
+
+def test_usage_string_representation(usage):
+    assert str(usage) == f"{usage.organization} - {usage.product}"
+
