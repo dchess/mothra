@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import UpdateView
-from .models import Profile
+from .models import Organization, Profile
 
 
 @method_decorator(login_required, name="dispatch")
@@ -30,3 +30,8 @@ class ProfileUpdate(UpdateView):
     fields = ["github_id", "organization"]
     template_name = "profile_update_form.html"
 
+
+@method_decorator(login_required, name="dispatch")
+class OrgList(ListView):
+    model = Organization
+    template_name = "orgs.html"

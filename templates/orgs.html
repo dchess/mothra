@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col-sm-8 offset-sm-2">
+    <h2 class="text-muted py-3">Organizations</h2>
+    <div class="list-group">
+        {% for org in object_list %}
+        <div class="row">
+            <div class="col-sm list-group-item mb-2">
+                <h5>{{ org.name }}</h5>
+                <span class="text-dark">Type: </span>
+                <span class="text-muted small">{{ org.org_type }}</span><br>
+                <span class="text-dark">Grades: </span>
+                <span class="text-muted small">{{ org.grade_range }}</span><br>
+                <span class="text-dark"># of Schools: </span>
+                <span class="text-muted small">{{ org.size }}</span><br>
+                <span class="text-dark">Locations: </span>
+                <span class="text-muted small">{{ org.locations.all|join:", " }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

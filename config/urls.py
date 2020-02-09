@@ -15,13 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from accounts.views import ProfileDetail, MemberList, ProfileUpdate
+from accounts.views import ProfileDetail, MemberList, ProfileUpdate, OrgList
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("django.contrib.auth.urls")),
     path("members/", MemberList.as_view(), name="members"),
+    path("orgs/", OrgList.as_view(), name="orgs"),
     path("", ProfileDetail.as_view(), name="profile"),
     path("<profile>/", ProfileDetail.as_view(), name="profile"),
     path("<int:pk>/edit/", ProfileUpdate.as_view(), name="edit_profile"),
