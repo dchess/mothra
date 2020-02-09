@@ -34,7 +34,8 @@
             {% endif %}
             <p class="small text-muted"><strong>Member since:</strong> {{ profile.user.date_joined.date }}</p>
             {% if profile.user == request.user %}
-            <a href="#" class="btn btn-light text-secondary btn-block">Edit Profile</a>
+            <a href="{% url "edit_profile" profile.id %}" class="btn btn-light text-secondary btn-block">Edit
+                Profile</a>
             {% endif %}
         </div>
     </div>
