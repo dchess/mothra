@@ -58,8 +58,10 @@ class OrganizationAdmin(admin.ModelAdmin):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT)
-    github_id = models.CharField(max_length=39)
-    organization = models.ForeignKey(Organization, on_delete=models.PROTECT)
+    github_id = models.CharField(max_length=39, null=True, blank=True)
+    organization = models.ForeignKey(
+        Organization, on_delete=models.PROTECT, null=True, blank=True
+    )
 
     def __str__(self):
         return self.user.username
