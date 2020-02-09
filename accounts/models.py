@@ -49,6 +49,12 @@ class Organization(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def grade_range(self):
+        min_grade = self.grades.all().order_by("level")[0]
+        max_grade = self.grades.all().order_by("-level")[0]
+        return f"{min_grade}-{max_grade}"
+
     class Meta:
         ordering = ("name",)
 
