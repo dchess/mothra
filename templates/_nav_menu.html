@@ -1,5 +1,8 @@
 <div class="collapse navbar-collapse pl-3" id="navbarNavAltMarkup">
     <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-item nav-link" href="{% url "members" %}">Members</a>
+        </li>
         {% if user.is_superuser %}
         <li class="nav-item">
             <a class="nav-item nav-link" href="{% url "admin:index" %}">Admin</a>

@@ -48,9 +48,10 @@ html,body,main  {
 }
 
 .profile-pic {
-  width: 175px;
-  height: 175px;
-  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  border-radius: 10%;
   margin: auto;
   display: block;
+  float: left;
 }
