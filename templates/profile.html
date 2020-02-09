@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container pt-3">
+    <div class="card" style="width: 18rem;">
+        {% if profile.github_id %}
+        <img class="card-img-top" src="https://github.com/{{ profile.github_id }}.png">
+        {% else %}
+        <div style="height: 286px!important;" class="bg-light text-center">
+            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Change your avatar">
+                <i style="margin-top: 30%" class="fas fa-user-circle fa-7x text-muted"></i>
+            </a>
+        </div>
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-title">{{ profile.user.first_name}} {{profile.user.last_name }}</h5>
+            <p class="card-text">
+                {% if profile.organization %}
+                <h6 class="text-muted">
+                    {{ profile.organization }}
+                </h6>
+                {% endif %}
+                <a href="mailto:{{ profile.user.email }}" class="card-text">
+                    <i class="fas fa-envelope pr-1"></i>
+                    {{ profile.user.email}}
+                </a>
+            </p>
+            {% if profile.github_id %}
+            <p>
+                <a href="https://github.com/{{ profile.github_id }}">
+                    <i class="fab fa-github pr-1"></i>
+                    {{ profile.github_id }}
+                </a>
+            </p>
+            {% endif %}
+            <p class="small text-muted"><strong>Member since:</strong> {{ profile.user.date_joined.date }}</p>
+            <a href="#" class="btn btn-light text-secondary btn-block">Edit Profile</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+{% endblock %}
