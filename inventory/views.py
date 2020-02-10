@@ -18,6 +18,18 @@ class ProductList(LoginRequiredMixin, ListView):
     template_name = "products.html"
 
 
+class ProductUpdate(LoginRequiredMixin, UpdateView):
+    model = Product
+    fields = "__all__"
+    template_name = "product_update_form.html"
+
+
+class ProductCreate(LoginRequiredMixin, CreateView):
+    model = Product
+    fields = "__all__"
+    template_name = "product_create_form.html"
+
+
 class DomainViewSet(viewsets.ModelViewSet):
     queryset = Domain.objects.all()
     serializer_class = DomainSerializer

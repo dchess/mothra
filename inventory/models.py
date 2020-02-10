@@ -2,6 +2,7 @@ from datetime import date
 from django.db import models
 from django.contrib import admin
 from django.contrib.auth.models import User
+from django.urls import reverse
 from accounts.models import Organization
 
 
@@ -34,6 +35,9 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("products")
 
     class Meta:
         ordering = ("name",)
