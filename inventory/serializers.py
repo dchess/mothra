@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Domain, Subject
+from .models import Domain, Subject, Product
 
 
 class DomainSerializer(serializers.ModelSerializer):
@@ -11,4 +11,10 @@ class DomainSerializer(serializers.ModelSerializer):
 class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subject
+        fields = "__all__"
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
         fields = "__all__"
