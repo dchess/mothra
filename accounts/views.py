@@ -1,10 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db import IntegrityError
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView
 from rest_framework import viewsets
+from rest_framework.authtoken.models import Token
 from .models import Organization, Profile, Grade, Location, OrgType
 from .serializers import (
     UserSerializer,
@@ -19,6 +21,14 @@ from .serializers import (
 @method_decorator(login_required, name="dispatch")
 class ProfileDetail(DetailView):
     template_name = "profile.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            context["token"] = Token.objects.get(user=self.request.user)
+        except Token.DoesNotExist:
+            context["token"] = None
+        return context
 
     def get_object(self):
         try:
@@ -89,3 +99,12 @@ class OrganizationViewSet(viewsets.ModelViewSet):
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+
+
+@login_required
+def create_token(request):
+    try:
+        Token.objects.create(user=request.user)
+        return redirect("profile")
+    except IntegrityError:
+        return redirect("profile")
