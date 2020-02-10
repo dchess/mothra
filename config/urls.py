@@ -17,15 +17,17 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from accounts.urls import router as account_router
-
+from inventory.urls import router as inventory_router
 
 router = routers.DefaultRouter()
 router.registry.extend(account_router.registry)
+router.registry.extend(inventory_router.registry)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include(router.urls)),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     path("", include("django.contrib.auth.urls")),
+    path("", include("inventory.urls")),
     path("", include("accounts.urls")),
 ]

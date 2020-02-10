@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404, redirect
-from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView
 from rest_framework import viewsets
@@ -18,8 +18,7 @@ from .serializers import (
 )
 
 
-@method_decorator(login_required, name="dispatch")
-class ProfileDetail(DetailView):
+class ProfileDetail(LoginRequiredMixin, DetailView):
     template_name = "profile.html"
 
     def get_context_data(self, **kwargs):
@@ -38,34 +37,29 @@ class ProfileDetail(DetailView):
             return obj or created
 
 
-@method_decorator(login_required, name="dispatch")
-class MemberList(ListView):
+class MemberList(LoginRequiredMixin, ListView):
     queryset = Profile.objects.filter(user__is_superuser=False)
     template_name = "members.html"
 
 
-@method_decorator(login_required, name="dispatch")
-class ProfileUpdate(UpdateView):
+class ProfileUpdate(LoginRequiredMixin, UpdateView):
     model = Profile
     fields = ["github_id", "organization"]
     template_name = "profile_update_form.html"
 
 
-@method_decorator(login_required, name="dispatch")
-class OrgList(ListView):
+class OrgList(LoginRequiredMixin, ListView):
     model = Organization
     template_name = "orgs.html"
 
 
-@method_decorator(login_required, name="dispatch")
-class OrgUpdate(UpdateView):
+class OrgUpdate(LoginRequiredMixin, UpdateView):
     model = Organization
     fields = "__all__"
     template_name = "org_update_form.html"
 
 
-@method_decorator(login_required, name="dispatch")
-class OrgCreate(CreateView):
+class OrgCreate(LoginRequiredMixin, CreateView):
     model = Organization
     fields = "__all__"
     template_name = "org_create_form.html"

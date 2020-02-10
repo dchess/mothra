@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="post" class="col-sm-6 offset-sm-3 my-3 edit-form">
+    {% csrf_token %}
+    <h4 class="text-muted text-center pb-3">Add Product</h4>
+    {{ form.as_p}}
+
+    <div class="row">
+        <div class="col-sm-3 offset-sm-6">
+            <a href="{% url "products" %}" class="btn btn-lg btn-light btn-block">Cancel</a>
+        </div>
+        <div class="col-sm-3">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(function () {
+        $("#{{ form.name.id_for_label }}").addClass("form-control");
+        $("#{{ form.domain.id_for_label }}").addClass("form-control");
+        $("#{{ form.subject.id_for_label }}").addClass("form-control");
+    })
+</script>
+{% endblock %}
