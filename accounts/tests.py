@@ -5,12 +5,10 @@ from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 from django.db.models.deletion import ProtectedError
 
-pytestmark = pytest.mark.django_db
 
-
-@pytest.fixture
+@pytest.fixture(autouse=True)
 def grade():
-    return Grade.objects.create(level=0, name="K")
+    return Grade.objects.get(pk=1)
 
 
 def test_grade_string_representation(grade):
@@ -58,9 +56,9 @@ def test_grade_name_is_required():
         grade.full_clean()
 
 
-@pytest.fixture
+@pytest.fixture(autouse=True)
 def location():
-    return Location.objects.create(abbreviation="CA", name="California")
+    return Location.objects.get(pk=1)
 
 
 def test_location_string_representation(location):
@@ -91,9 +89,10 @@ def test_location_abbreviation_is_required():
         location.full_clean()
 
 
-@pytest.fixture
+@pytest.fixture(autouse=True)
 def org_type():
-    return OrgType.objects.create(name="charter management organization")
+    #     return OrgType.objects.create(name="charter management organization")
+    return OrgType.objects.get(pk=1)
 
 
 def test_org_type_string_representation(org_type):
@@ -112,20 +111,9 @@ def test_org_type_name_is_required():
         org_type.full_clean()
 
 
-@pytest.fixture
-def organization(location, org_type):
-    # create test grades for HS (9-12)
-    for grade in range(9, 13):
-        Grade.objects.create(level=grade, name=f"{grade}")
-
-    grades = Grade.objects.filter(level__gte=9)
-    organization = Organization.objects.create(
-        name="Test Organization", size=12, org_type=org_type
-    )
-
-    organization.grades.set(grades)
-    organization.save()
-    return organization
+@pytest.fixture(autouse=1)
+def organization():
+    return Organization.objects.get(pk=1)
 
 
 def test_organization_string_representation(organization):
@@ -165,16 +153,14 @@ def test_organization_size_is_not_required(org_type):
     organization.full_clean()
 
 
-@pytest.fixture
+@pytest.fixture(autouse=True)
 def user():
-    return User.objects.create_user("test_user", password="Testpassword")
+    return User.objects.get(pk=1)
 
 
-@pytest.fixture
+@pytest.fixture(autouse=True)
 def profile(user, organization):
-    return Profile.objects.create(
-        user=user, github_id="test_user", organization=organization
-    )
+    return Profile.objects.get(pk=1)
 
 
 def test_profile_string_representation(profile):
@@ -191,6 +177,7 @@ def test_profile_organization_is_required(profile):
     with pytest.raises(ValidationError):
         profile.organization = None
         profile.full_clean()
+
 
 def test_profile_user_is_required(profile):
     with pytest.raises(ValidationError):

@@ -1,0 +1,22 @@
+<ul class="navbar-nav pl-auto">
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="profile" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {% if user.profile.github_id %}
+            <img src="https://github.com/{{ user.profile.github_id }}.png" height="31px" width="31px"
+                style="border-radius: 50%;">
+            {% else %}
+            <i class="fas fa-user-circle fa-2x"></i>
+            {% endif %}
+        </a>
+        <div class="dropdown-menu dropdown-menu-right pl-2 pr-2" aria-labelledby="profile">
+            <p class="dropdown-item small">Signed in as <strong>{{ user }}</strong></p>
+            <div class="dropdown-divider"></div>
+            {% if user.profile %}
+            <a class="dropdown-item small" href="{% url "profile" user %}">Your Profile</a>
+            {% endif %}
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item small" href="{% url "logout" %}">Sign out</a>
+        </div>
+    </li>
+</ul>

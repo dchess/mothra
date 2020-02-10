@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.urls import reverse
 
 
 class Grade(models.Model):
@@ -48,6 +49,15 @@ class Organization(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse("orgs")
+
+    @property
+    def grade_range(self):
+        min_grade = self.grades.all().order_by("level")[0]
+        max_grade = self.grades.all().order_by("-level")[0]
+        return f"{min_grade}-{max_grade}"
+
     class Meta:
         ordering = ("name",)
 
@@ -58,11 +68,16 @@ class OrganizationAdmin(admin.ModelAdmin):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT)
-    github_id = models.CharField(max_length=39)
-    organization = models.ForeignKey(Organization, on_delete=models.PROTECT)
+    github_id = models.CharField(max_length=39, null=True, blank=True)
+    organization = models.ForeignKey(
+        Organization, on_delete=models.PROTECT, null=True, blank=True
+    )
 
     def __str__(self):
         return self.user.username
+
+    def get_absolute_url(self):
+        return reverse("profile", kwargs={"profile": self.user})
 
     class Meta:
         ordering = ("user",)
