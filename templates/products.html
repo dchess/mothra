@@ -1,19 +1,40 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="col-sm-8 offset-sm-2">
-    <h2 class="text-muted py-3">Products</h2>
-    <div class="list-group">
-        {% for product in object_list %}
-        <div class="row">
-            <a href="#" class="list-group-item list-group-item-action">
-
-                <div class="col-sm">
-                    <strong>{{ product.name }}</strong><br>
-                    {{ product.domain }}
-                </div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 offset-sm-2">
+            <h2 class="text-muted py-3">Products</h2>
+        </div>
+        <div class="col-sm-2 pt-3">
+            <a href="#" class="btn btn-sm btn-outline-primary pull-right btn-block">
+                <i class="fas fa-plus"></i>
+                Add Product
             </a>
         </div>
-        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col-sm-8 offset-sm-2">
+            <div class="list-group">
+                {% for product in object_list %}
+                <div class="row">
+                    <div class="col-sm list-group-item mb-2">
+                        <h5>{{ product.name }}
+                            <a href="#" class="edit-btn text-muted">
+                                <i class="far fa-edit pl-3 fa-xs"></i>
+                            </a>
+                        </h5>
+
+                        <span class="text-dark">Domain: </span>
+                        <span class="text-muted small">{{ product.domain }}</span><br>
+                        {% if produc.subject %}
+                        <span class="text-dark">Subject: </span>
+                        <span class="text-muted small">{{ product.subject }}</span><br>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
