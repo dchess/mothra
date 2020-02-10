@@ -15,24 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from accounts.views import (
-    ProfileDetail,
-    MemberList,
-    ProfileUpdate,
-    OrgList,
-    OrgUpdate,
-    OrgCreate,
-)
+from rest_framework import routers
+from accounts.urls import router as account_router
 
+
+router = routers.DefaultRouter()
+router.registry.extend(account_router.registry)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("api/", include(router.urls)),
+    path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     path("", include("django.contrib.auth.urls")),
-    path("members/", MemberList.as_view(), name="members"),
-    path("orgs/", OrgList.as_view(), name="orgs"),
-    path("", ProfileDetail.as_view(), name="profile"),
-    path("<profile>/", ProfileDetail.as_view(), name="profile"),
-    path("<int:pk>/edit/", ProfileUpdate.as_view(), name="edit_profile"),
-    path("orgs/<int:pk>/edit", OrgUpdate.as_view(), name="edit_org"),
-    path("orgs/create", OrgCreate.as_view(), name="create_org"),
+    path("", include("accounts.urls")),
 ]

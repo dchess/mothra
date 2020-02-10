@@ -33,9 +33,25 @@
             </p>
             {% endif %}
             <p class="small text-muted"><strong>Member since:</strong> {{ profile.user.date_joined.date }}</p>
+            {% if token %}
+            <div class="input-group mb-2 text-muted">
+                <span id="token-text" class="mr-2">Show token</span>
+                <input type="text" style="display: none;" id="api-token" class="small form-control mr-2"
+                    value="{{ token }}">
+                <i class="fas fa-eye toggle-token" id="token-icon"></i>
+            </div>
+            {% else %}
+            <a href="{% url "create_token" %}" class="text-muted">
+                <i class="fas fa-plus"></i>
+                Add API token
+            </a>
+            {% endif %}
             {% if profile.user == request.user %}
-            <a href="{% url "edit_profile" profile.id %}" class="btn btn-light text-secondary btn-block">Edit
-                Profile</a>
+            <p>
+                <a href="{% url "edit_profile" profile.id %}" class="btn btn-light text-secondary btn-block">
+                    Edit Profile
+                </a>
+            </p>
             {% endif %}
         </div>
     </div>
@@ -45,7 +61,12 @@
 {% block scripts %}
 <script>
     $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
+        $('[data-toggle="tooltip"]').tooltip();
+        $('.toggle-token').click(function () {
+            $('#token-icon').toggleClass('fa-eye').toggleClass('fa-eye-slash');
+            $('#api-token').toggle();
+            $('#token-text').toggle();
+        });
     })
 </script>
 {% endblock %}

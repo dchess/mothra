@@ -1,14 +1,34 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.db import IntegrityError
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView
-from .models import Organization, Profile
+from rest_framework import viewsets
+from rest_framework.authtoken.models import Token
+from .models import Organization, Profile, Grade, Location, OrgType
+from .serializers import (
+    UserSerializer,
+    GradeSerializer,
+    LocationSerializer,
+    OrgTypeSerializer,
+    OrganizationSerializer,
+    ProfileSerializer,
+)
 
 
 @method_decorator(login_required, name="dispatch")
 class ProfileDetail(DetailView):
     template_name = "profile.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            context["token"] = Token.objects.get(user=self.request.user)
+        except Token.DoesNotExist:
+            context["token"] = None
+        return context
 
     def get_object(self):
         try:
@@ -49,3 +69,42 @@ class OrgCreate(CreateView):
     model = Organization
     fields = "__all__"
     template_name = "org_create_form.html"
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all().order_by("id")
+    serializer_class = UserSerializer
+
+
+class GradeViewSet(viewsets.ModelViewSet):
+    queryset = Grade.objects.all()
+    serializer_class = GradeSerializer
+
+
+class LocationViewSet(viewsets.ModelViewSet):
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
+
+
+class OrgTypeViewSet(viewsets.ModelViewSet):
+    queryset = OrgType.objects.all()
+    serializer_class = OrgTypeSerializer
+
+
+class OrganizationViewSet(viewsets.ModelViewSet):
+    queryset = Organization.objects.all()
+    serializer_class = OrganizationSerializer
+
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+
+@login_required
+def create_token(request):
+    try:
+        Token.objects.create(user=request.user)
+        return redirect("profile")
+    except IntegrityError:
+        return redirect("profile")
