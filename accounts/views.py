@@ -11,6 +11,7 @@ from .serializers import (
     GradeSerializer,
     LocationSerializer,
     OrgTypeSerializer,
+    OrganizationSerializer,
 )
 
 
@@ -77,3 +78,8 @@ class LocationViewSet(viewsets.ModelViewSet):
 class OrgTypeViewSet(viewsets.ModelViewSet):
     queryset = OrgType.objects.all()
     serializer_class = OrgTypeSerializer
+
+
+class OrganizationViewSet(viewsets.ModelViewSet):
+    queryset = Organization.objects.all()
+    serializer_class = OrganizationSerializer

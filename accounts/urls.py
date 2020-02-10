@@ -8,6 +8,7 @@ router.register(r"users", views.UserViewSet)
 router.register(r"grades", views.GradeViewSet)
 router.register(r"locations", views.LocationViewSet)
 router.register(r"orgtypes", views.OrgTypeViewSet)
+router.register(r"organizations", views.OrganizationViewSet)
 
 
 urlpatterns = [
