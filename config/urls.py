@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from accounts.views import ProfileDetail, MemberList, ProfileUpdate, OrgList
+from accounts.views import (
+    ProfileDetail,
+    MemberList,
+    ProfileUpdate,
+    OrgList,
+    OrgUpdate,
+    OrgCreate,
+)
 
 
 urlpatterns = [
@@ -26,4 +33,6 @@ urlpatterns = [
     path("", ProfileDetail.as_view(), name="profile"),
     path("<profile>/", ProfileDetail.as_view(), name="profile"),
     path("<int:pk>/edit/", ProfileUpdate.as_view(), name="edit_profile"),
+    path("orgs/<int:pk>/edit", OrgUpdate.as_view(), name="edit_org"),
+    path("orgs/create", OrgCreate.as_view(), name="create_org"),
 ]

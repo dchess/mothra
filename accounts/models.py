@@ -49,6 +49,9 @@ class Organization(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse("orgs")
+
     @property
     def grade_range(self):
         min_grade = self.grades.all().order_by("level")[0]

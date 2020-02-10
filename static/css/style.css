@@ -59,3 +59,9 @@ html,body,main  {
 .edit-btn:hover {
   color: #007bff!important;
 }
+
+.edit-form {
+  background-color: #e9ecef;
+  border-radius: 2%;
+  padding: 1em;
+}
