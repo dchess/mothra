@@ -4,3 +4,4 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r"domains", views.DomainViewSet)
+router.register(r"subjects", views.SubjectViewSet)
