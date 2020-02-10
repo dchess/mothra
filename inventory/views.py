@@ -1,7 +1,12 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .models import Domain, Subject, Product
-from .serializers import DomainSerializer, SubjectSerializer, ProductSerializer
+from .models import Domain, Subject, Product, UsageType
+from .serializers import (
+    DomainSerializer,
+    SubjectSerializer,
+    ProductSerializer,
+    UsageTypeSerializer,
+)
 
 
 class DomainViewSet(viewsets.ModelViewSet):
@@ -17,3 +22,8 @@ class SubjectViewSet(viewsets.ModelViewSet):
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+
+class UsageTypeViewSet(viewsets.ModelViewSet):
+    queryset = UsageType.objects.all()
+    serializer_class = UsageTypeSerializer
