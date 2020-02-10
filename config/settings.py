@@ -123,3 +123,8 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 LOGIN_REDIRECT_URL = "profile"
 LOGOUT_REDIRECT_URL = "login"
 LOGIN_URL = "login"
+
+if not int(os.getenv("DEBUG", default=0)):
+    SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_HTTPONLY = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTOCOL", "https")
