@@ -5,8 +5,8 @@ from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView
 from rest_framework import viewsets
-from .models import Organization, Profile
-from .serializers import UserSerializer
+from .models import Organization, Profile, Grade
+from .serializers import UserSerializer, GradeSerializer
 
 
 @method_decorator(login_required, name="dispatch")
@@ -57,3 +57,8 @@ class OrgCreate(CreateView):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by("id")
     serializer_class = UserSerializer
+
+
+class GradeViewSet(viewsets.ModelViewSet):
+    queryset = Grade.objects.all().order_by("level")
+    serializer_class = GradeSerializer
