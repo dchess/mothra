@@ -1,9 +1,12 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView
+from rest_framework import viewsets
 from .models import Organization, Profile
+from .serializers import UserSerializer
 
 
 @method_decorator(login_required, name="dispatch")
@@ -49,3 +52,8 @@ class OrgCreate(CreateView):
     model = Organization
     fields = "__all__"
     template_name = "org_create_form.html"
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all().order_by("id")
+    serializer_class = UserSerializer
