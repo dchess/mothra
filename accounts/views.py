@@ -5,8 +5,13 @@ from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView
 from rest_framework import viewsets
-from .models import Organization, Profile, Grade
-from .serializers import UserSerializer, GradeSerializer
+from .models import Organization, Profile, Grade, Location, OrgType
+from .serializers import (
+    UserSerializer,
+    GradeSerializer,
+    LocationSerializer,
+    OrgTypeSerializer,
+)
 
 
 @method_decorator(login_required, name="dispatch")
@@ -60,5 +65,15 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class GradeViewSet(viewsets.ModelViewSet):
-    queryset = Grade.objects.all().order_by("level")
+    queryset = Grade.objects.all()
     serializer_class = GradeSerializer
+
+
+class LocationViewSet(viewsets.ModelViewSet):
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
+
+
+class OrgTypeViewSet(viewsets.ModelViewSet):
+    queryset = OrgType.objects.all()
+    serializer_class = OrgTypeSerializer

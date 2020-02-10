@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Grade
+from .models import Grade, Location, OrgType
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -14,3 +14,15 @@ class GradeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Grade
         fields = ("id", "level", "name")
+
+
+class LocationSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Location
+        fields = ("id", "name", "abbreviation")
+
+
+class OrgTypeSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = OrgType
+        fields = ("id", "name")
