@@ -1,4 +1,7 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
+from django.views.generic import DetailView, ListView
+from django.views.generic.edit import CreateView, UpdateView
 from rest_framework import viewsets
 from .models import Domain, Subject, Product, UsageType, Usage
 from .serializers import (
@@ -8,6 +11,11 @@ from .serializers import (
     UsageTypeSerializer,
     UsageSerializer,
 )
+
+
+class ProductList(LoginRequiredMixin, ListView):
+    model = Product
+    template_name = "products.html"
 
 
 class DomainViewSet(viewsets.ModelViewSet):

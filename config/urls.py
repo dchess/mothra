@@ -28,5 +28,6 @@ urlpatterns = [
     path("api/", include(router.urls)),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     path("", include("django.contrib.auth.urls")),
+    path("", include("inventory.urls")),
     path("", include("accounts.urls")),
 ]

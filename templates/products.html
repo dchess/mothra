@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col-sm-8 offset-sm-2">
+    <h2 class="text-muted py-3">Products</h2>
+    <div class="list-group">
+        {% for product in object_list %}
+        <div class="row">
+            <a href="#" class="list-group-item list-group-item-action">
+
+                <div class="col-sm">
+                    <strong>{{ product.name }}</strong><br>
+                    {{ product.domain }}
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

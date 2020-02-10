@@ -8,3 +8,7 @@ router.register(r"subjects", views.SubjectViewSet)
 router.register(r"products", views.ProductViewSet)
 router.register(r"usagetypes", views.UsageTypeViewSet)
 router.register(r"usages", views.UsageViewSet)
+
+
+urlpatterns = [path("products/", views.ProductList.as_view(), name="products")]
+
