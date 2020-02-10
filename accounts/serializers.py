@@ -40,3 +40,9 @@ class OrganizationSerializer(serializers.ModelSerializer):
             "org_type",
             "grade_range",
         )
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = "__all__"

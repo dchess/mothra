@@ -12,6 +12,7 @@ from .serializers import (
     LocationSerializer,
     OrgTypeSerializer,
     OrganizationSerializer,
+    ProfileSerializer,
 )
 
 
@@ -83,3 +84,8 @@ class OrgTypeViewSet(viewsets.ModelViewSet):
 class OrganizationViewSet(viewsets.ModelViewSet):
     queryset = Organization.objects.all()
     serializer_class = OrganizationSerializer
+
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer

@@ -9,6 +9,7 @@ router.register(r"grades", views.GradeViewSet)
 router.register(r"locations", views.LocationViewSet)
 router.register(r"orgtypes", views.OrgTypeViewSet)
 router.register(r"organizations", views.OrganizationViewSet)
+router.register(r"profiles", views.ProfileViewSet)
 
 
 urlpatterns = [
