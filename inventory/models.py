@@ -59,14 +59,34 @@ class UsageType(models.Model):
         ordering = ("name",)
 
 
+class DataInterface(models.Model):
+    name = models.CharField(max_length=25)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ("name",)
+
+
 class Usage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     organization = models.ForeignKey(Organization, on_delete=models.PROTECT)
     reviewer = models.ForeignKey(User, on_delete=models.PROTECT)
-    can_push = models.BooleanField()
-    how_push = models.TextField(blank=True, null=True)
-    can_pull = models.BooleanField()
-    how_pull = models.TextField(blank=True, null=True)
+    how_push = models.ForeignKey(
+        DataInterface,
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        related_name="push_type",
+    )
+    how_pull = models.ForeignKey(
+        DataInterface,
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        related_name="pull_type",
+    )
     usage_type = models.ForeignKey(UsageType, on_delete=models.PROTECT)
     is_deprecated = models.BooleanField()
     when_deprecated = models.DateField(blank=True, null=True)
@@ -80,12 +100,4 @@ class Usage(models.Model):
 
 
 class UsageAdmin(admin.ModelAdmin):
-    list_filter = (
-        "product",
-        "organization",
-        "reviewer",
-        "can_push",
-        "can_pull",
-        "usage_type",
-        "is_deprecated",
-    )
+    list_filter = ("product", "organization", "reviewer", "usage_type", "is_deprecated")
