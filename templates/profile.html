@@ -21,6 +21,14 @@
                             {{ profile.organization }}
                         </h6>
                         {% endif %}
+                        {% if profile.user == request.user %}
+                        <p>
+                            <a href="{% url "edit_profile" profile.id %}"
+                                class="btn btn-outline-primary btn-block btn-sm">
+                                Edit Profile
+                            </a>
+                        </p>
+                        {% endif %}
                         <a href="mailto:{{ profile.user.email }}" class="card-text">
                             <i class="fas fa-envelope pr-1"></i>
                             {{ profile.user.email}}
@@ -49,13 +57,6 @@
                         Add API token
                     </a>
                     {% endif %}
-                    {% endif %}
-                    {% if profile.user == request.user %}
-                    <p>
-                        <a href="{% url "edit_profile" profile.id %}" class="btn btn-light text-secondary btn-block">
-                            Edit Profile
-                        </a>
-                    </p>
                     {% endif %}
                 </div>
             </div>
@@ -143,7 +144,7 @@
                         </div>
                     </div>
                     <div class="row text-muted small">
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             <i class="fas fa-circle fa-sm" style="color: {{ product.domain.color }}"></i>
                             {{ product.domain }}
                         </div>
@@ -156,7 +157,7 @@
                             {% endif %}
                         </div>
                         {% for review in product.usage_set.all %}
-                        <div class="col-sm-3 offset-sm-3 text-right">
+                        <div class="col-sm-3 offset-sm-2 text-right">
                             <span class="small pr-2">
                                 {% if review.reviewer == profile %}
                                 <i class="fas fa-upload pr-1"></i>
