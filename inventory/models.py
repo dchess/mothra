@@ -8,6 +8,7 @@ from accounts.models import Organization, Profile
 
 class Domain(models.Model):
     name = models.CharField(max_length=50)
+    color = models.CharField(max_length=7, default="#000000")
 
     def __str__(self):
         return self.name
@@ -18,6 +19,7 @@ class Domain(models.Model):
 
 class Subject(models.Model):
     name = models.CharField(max_length=25)
+    icon = models.CharField(max_length=50, default="fas fa-brain")
 
     def __str__(self):
         return self.name
