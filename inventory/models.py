@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.urls import reverse
-from accounts.models import Organization
+from accounts.models import Organization, Profile
 
 
 class Domain(models.Model):
@@ -72,7 +72,7 @@ class DataInterface(models.Model):
 class Usage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     organization = models.ForeignKey(Organization, on_delete=models.PROTECT)
-    reviewer = models.ForeignKey(User, on_delete=models.PROTECT)
+    reviewer = models.ForeignKey(Profile, on_delete=models.PROTECT)
     how_push = models.ForeignKey(
         DataInterface,
         on_delete=models.PROTECT,
