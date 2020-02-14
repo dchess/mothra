@@ -2,6 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView
+from django.urls import reverse
 from rest_framework import viewsets
 from .models import Domain, Subject, Product, UsageType, Usage
 from .serializers import (
@@ -28,6 +29,15 @@ class ProductCreate(LoginRequiredMixin, CreateView):
     model = Product
     fields = "__all__"
     template_name = "product_create_form.html"
+
+
+class UsageCreate(LoginRequiredMixin, CreateView):
+    model = Usage
+    fields = "__all__"
+    template_name = "usage_create_form.html"
+
+    def get_success_url(self):
+        return reverse("profile")
 
 
 class DomainViewSet(viewsets.ModelViewSet):
