@@ -8,6 +8,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from rest_framework import viewsets
 from rest_framework.authtoken.models import Token
 from .models import Organization, Profile, Grade, Location, OrgType
+from inventory.models import Usage
 from .serializers import (
     UserSerializer,
     GradeSerializer,
@@ -24,9 +25,17 @@ class ProfileDetail(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         try:
-            context["token"] = Token.objects.get(user=self.request.user)
+            if context["profile"].user == self.request.user:
+                context["token"] = Token.objects.get(user=self.request.user)
+            else:
+                context["token"] = None
+            usages = Usage.objects.filter(reviewer=context["profile"])
+            context["domains"] = set([u.product.domain for u in usages])
+            context["usage_types"] = set([u.usage_type for u in usages])
         except Token.DoesNotExist:
             context["token"] = None
+        except Usage.DoesNotExist:
+            context["usage_types"] = context["domains"] = None
         return context
 
     def get_object(self):
@@ -38,7 +47,7 @@ class ProfileDetail(LoginRequiredMixin, DetailView):
 
 
 class MemberList(LoginRequiredMixin, ListView):
-    queryset = Profile.objects.filter(user__is_superuser=False)
+    model = Profile
     template_name = "members.html"
 
 

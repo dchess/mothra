@@ -65,3 +65,7 @@ html,body,main  {
   border-radius: 2%;
   padding: 1em;
 }
+
+.dropdown-btn-text { 
+  text-decoration: none !important;
+}
