@@ -3,11 +3,12 @@ from django.db import models
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.urls import reverse
-from accounts.models import Organization
+from accounts.models import Organization, Profile
 
 
 class Domain(models.Model):
     name = models.CharField(max_length=50)
+    color = models.CharField(max_length=7, default="#000000")
 
     def __str__(self):
         return self.name
@@ -18,6 +19,7 @@ class Domain(models.Model):
 
 class Subject(models.Model):
     name = models.CharField(max_length=25)
+    icon = models.CharField(max_length=50, default="fas fa-brain")
 
     def __str__(self):
         return self.name
@@ -72,7 +74,7 @@ class DataInterface(models.Model):
 class Usage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     organization = models.ForeignKey(Organization, on_delete=models.PROTECT)
-    reviewer = models.ForeignKey(User, on_delete=models.PROTECT)
+    reviewer = models.ForeignKey(Profile, on_delete=models.PROTECT)
     how_push = models.ForeignKey(
         DataInterface,
         on_delete=models.PROTECT,

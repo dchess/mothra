@@ -72,6 +72,7 @@ class Profile(models.Model):
     organization = models.ForeignKey(
         Organization, on_delete=models.PROTECT, null=True, blank=True
     )
+    products = models.ManyToManyField("inventory.Product", through="inventory.Usage")
 
     def __str__(self):
         return self.user.username

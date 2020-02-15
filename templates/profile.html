@@ -1,58 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container pt-3">
-    <div class="card" style="width: 18rem;">
-        {% if profile.github_id %}
-        <img class="card-img-top" src="https://github.com/{{ profile.github_id }}.png">
-        {% else %}
-        <div style="height: 286px!important;" class="bg-light text-center">
-            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Change your avatar">
-                <i style="margin-top: 30%" class="fas fa-user-circle fa-7x text-muted"></i>
-            </a>
+    <div class="row">
+        <div class="col-sm-4">
+            {% include "_user_info.html" %}
         </div>
-        {% endif %}
-        <div class="card-body">
-            <h5 class="card-title">{{ profile.user.first_name}} {{profile.user.last_name }}</h5>
-            <p class="card-text">
-                {% if profile.organization %}
-                <h6 class="text-muted">
-                    {{ profile.organization }}
-                </h6>
-                {% endif %}
-                <a href="mailto:{{ profile.user.email }}" class="card-text">
-                    <i class="fas fa-envelope pr-1"></i>
-                    {{ profile.user.email}}
-                </a>
-            </p>
-            {% if profile.github_id %}
-            <p>
-                <a href="https://github.com/{{ profile.github_id }}">
-                    <i class="fab fa-github pr-1"></i>
-                    {{ profile.github_id }}
-                </a>
-            </p>
-            {% endif %}
-            <p class="small text-muted"><strong>Member since:</strong> {{ profile.user.date_joined.date }}</p>
-            {% if token %}
-            <div class="input-group mb-2 text-muted">
-                <span id="token-text" class="mr-2">Show token</span>
-                <input type="text" style="display: none;" id="api-token" class="small form-control mr-2"
-                    value="{{ token }}">
-                <i class="fas fa-eye toggle-token" id="token-icon"></i>
+        <div class="col-sm-8">
+            <div class="row">
+                {% include "_profile_nav.html" %}
             </div>
-            {% else %}
-            <a href="{% url "create_token" %}" class="text-muted">
-                <i class="fas fa-plus"></i>
-                Add API token
-            </a>
-            {% endif %}
-            {% if profile.user == request.user %}
-            <p>
-                <a href="{% url "edit_profile" profile.id %}" class="btn btn-light text-secondary btn-block">
-                    Edit Profile
-                </a>
-            </p>
-            {% endif %}
+            <div class="tab-content">
+                {% include "_user_products.html" %}
+                <div class="tab-pane fade" id="repos" role="tabpanel" aria-labelledby="repos-tab"></div>
+            </div>
         </div>
     </div>
 </div>
