@@ -1,0 +1,43 @@
+<div class=" tab-pane fade show active" id="products" role="tabpanel" aria-labelledby="products-tab">
+    {% include "_user_product_search.html" %}
+    {% for product in profile.products.all %}
+    <div class="row">
+        <div class="col-sm-10">
+            <h6><a href="{% url "product" product.id %}">{{ product.name }}</a></h6>
+        </div>
+        <div class="col-sm-2 text-right">
+            <a href="#" class="btn btn-sm text-muted">
+                <i class="fas fa-users pr-1"></i>
+                {{ product.usage_set.count }}
+            </a>
+        </div>
+    </div>
+    <div class="row text-muted small">
+        <div class="col-sm-4">
+            <i class="fas fa-circle fa-sm" style="color: {{ product.domain.color }}"></i>
+            {{ product.domain }}
+        </div>
+        <div class="col-sm-3">
+            {% if product.subject %}
+            <i class="{{ product.subject.icon }} fa-sm pr-1"></i>
+            {{ product.subject }}
+            {% endif %}
+        </div>
+        {% for review in product.usage_set.all %}
+        {% if review.reviewer == profile %}
+        <div class="col-sm-3 offset-sm-2 text-right">
+            <span class="small pr-2">
+                <i class="fas fa-upload pr-1"></i>
+                {{ review.how_push }}
+            </span>
+            <span class="small">
+                <i class="fas fa-download pr-1"></i>
+                {{ review.how_pull }}
+            </span>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <hr>
+    {% endfor %}
+</div>

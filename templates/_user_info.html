@@ -1,0 +1,56 @@
+<div class="card" style="width: 18rem;">
+    {% if profile.github_id %}
+    <img class="card-img-top" src="https://github.com/{{ profile.github_id }}.png">
+    {% else %}
+    <div style="height: 286px!important;" class="bg-light text-center">
+        <a href="#" data-toggle="tooltip" data-placement="bottom" title="Change your avatar">
+            <i style="margin-top: 30%" class="fas fa-user-circle fa-7x text-muted"></i>
+        </a>
+    </div>
+    {% endif %}
+    <div class="card-body">
+        <h5 class="card-title">{{ profile.user.first_name}} {{profile.user.last_name }}</h5>
+        <p class="card-text">
+            {% if profile.organization %}
+            <h6 class="text-muted">
+                {{ profile.organization }}
+            </h6>
+            {% endif %}
+            {% if profile.user == request.user %}
+            <p>
+                <a href="{% url "edit_profile" profile.id %}" class="btn btn-outline-primary btn-block btn-sm">
+                    Edit Profile
+                </a>
+            </p>
+            {% endif %}
+            <a href="mailto:{{ profile.user.email }}" class="small card-text">
+                <i class="fas fa-envelope pr-1"></i>
+                {{ profile.user.email|truncatechars:40}}
+            </a>
+        </p>
+        {% if profile.github_id %}
+        <p>
+            <a href="https://github.com/{{ profile.github_id }}" class="small">
+                <i class="fab fa-github pr-1"></i>
+                {{ profile.github_id }}
+            </a>
+        </p>
+        {% endif %}
+        <p class="small text-muted"><strong>Member since:</strong> {{ profile.user.date_joined.date }}</p>
+        {% if profile == user.profile %}
+        {% if token %}
+        <div class="input-group mb-2 text-muted">
+            <span id="token-text" class="mr-2">Show token</span>
+            <input type="text" style="display: none;" id="api-token" class="small form-control mr-2"
+                value="{{ token }}">
+            <i class="fas fa-eye toggle-token" id="token-icon"></i>
+        </div>
+        {% else %}
+        <a href="{% url "create_token" %}" class="text-muted">
+            <i class="fas fa-plus"></i>
+            Add API token
+        </a>
+        {% endif %}
+        {% endif %}
+    </div>
+</div>

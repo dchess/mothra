@@ -31,6 +31,11 @@ class ProductCreate(LoginRequiredMixin, CreateView):
     template_name = "product_create_form.html"
 
 
+class ProductDetail(LoginRequiredMixin, DetailView):
+    model = Product
+    template_name = "product.html"
+
+
 class UsageCreate(LoginRequiredMixin, CreateView):
     model = Usage
     fields = "__all__"
