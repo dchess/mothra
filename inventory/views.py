@@ -45,6 +45,15 @@ class UsageCreate(LoginRequiredMixin, CreateView):
         return reverse("profile")
 
 
+class UsageUpdate(LoginRequiredMixin, UpdateView):
+    model = Usage
+    fields = "__all__"
+    template_name = "usage_update_form.html"
+
+    def get_success_url(self):
+        return reverse("profile")
+
+
 class DomainViewSet(viewsets.ModelViewSet):
     queryset = Domain.objects.all()
     serializer_class = DomainSerializer

@@ -56,6 +56,11 @@
                     <i class="fa fa-user"></i>
                     {% endif %}
                     <a href="{% url "profile" usage.reviewer %}">{{ usage.reviewer }}</a>
+                    {% if usage.reviewer == user.profile %}
+                    <a href="{% url "edit_review" usage.id %}">
+                        <i class="pl-2 far fa-edit text-muted"></i>
+                    </a>
+                    {% endif %}
                     <span class="text-right float-right">
                         <strong>{{ usage.organization }}</strong>
                     </span>
