@@ -2,19 +2,29 @@
 {% block content %}
 <div class="col-sm-8 offset-sm-2">
     <h2 class="text-muted py-3">Members</h2>
-    <div class="list-group">
+    <div class="list-group list-group-flush">
         {% for profile in object_list %}
-        <div class="row">
-            <a href="{% url "profile" profile.user %}" class="list-group-item list-group-item-action">
-                <div class="col-sm-1">
-                    <img src="https://github.com/{{ profile.github_id}}.png" class="profile-pic mr-3">
+        <a href="{% url "profile" profile.user %}" class="list-group-item list-group-item-action">
+            <div class="d-flex w-80 justify-content-between">
+                <div class="row">
+                    <div>
+                        <img src="https://github.com/{{ profile.github_id}}.png" class="profile-pic mx-3">
+                    </div>
+                    <div>
+                        <strong>{{ profile.user.first_name }} {{ profile.user.last_name }}</strong>
+                        <p>
+                            {{ profile.organization }}
+                        </p>
+                    </div>
                 </div>
-                <div class="col-sm">
-                    <strong>{{ profile.user.first_name }} {{ profile.user.last_name }}</strong><br>
-                    {{ profile.organization }}
-                </div>
-            </a>
-        </div>
+                <span class="text-muted small">
+                    <i class="fas fa-project-diagram"></i>
+                    {{ profile.products.count }}
+                </span>
+            </div>
+
+
+        </a>
         {% endfor %}
     </div>
 </div>
