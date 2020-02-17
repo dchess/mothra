@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.urls import reverse
+from django import forms
 
 
 class Grade(models.Model):
@@ -88,3 +89,15 @@ class ProfileAdmin(admin.ModelAdmin):
     list_display = ("user", "organization")
     list_filter = ("organization",)
     search_fields = ["user", "organization"]
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["first_name", "last_name", "email"]
+
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ["github_id", "organization"]
