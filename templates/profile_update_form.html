@@ -4,16 +4,37 @@
     <form method="post">
         {% csrf_token %}
         <h4 class="text-muted text-center pb-3">Edit Profile for <strong>{{ profile.user }}</strong></h4>
-        <label for="{{ form.github_id.id_for_label }}">Github Username</label>
-        <input type="text" class="form-control" name="{{ form.github_id.html_name }}" autofocus
-            id="{{ form.github_id.id_for_label }}" {%if form.github_id.value %}value="{{ form.github_id.value }}"
-            {% endif %}>
-        <div class="form-group pt-3">
+        <div class="form-row form-group">
+            <div class="col">
+                <label for="id_first_name">First Name</label>
+                <input type="text" class="form-control" id="id_first_name" name="first_name"
+                    value="{{ user.first_name }}">
+            </div>
+            <div class="col">
+                <label for="id_last_name">Last Name</label>
+                <input type="text" class="form-control" id="id_last_name" name="last_name" value="{{ user.last_name }}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="id_email">Email Address</label>
+            <input type="email" class="form-control" id="id_email" name="email" value="{{ user.email }}">
+
+        </div>
+        <div class="form-group">
+            <label for="{{ form.github_id.id_for_label }}">Github Username</label>
+            <input type="text" class="form-control" name="{{ form.github_id.html_name }}" autofocus
+                id="{{ form.github_id.id_for_label }}" {%if form.github_id.value %}value="{{ form.github_id.value }}"
+                {% endif %}>
+        </div>
+        <div class="form-group">
             <label for="{{ form.organization.id_for_label }}">Organization</label>
             {{ form.organization }}
         </div>
-        <div class="row">
-            <div class="col-sm-3 offset-sm-6">
+        <div class="row pt-3">
+            <div class="col-sm-4">
+                <a href="{% url "password_change" %}" class="btn btn-lg btn-secondary">Update Password</a>
+            </div>
+            <div class="col-sm-3 offset-sm-2">
                 <a href="{% url "profile" user %}" class="btn btn-lg btn-light btn-block">Cancel</a>
             </div>
             <div class="col-sm-3">
