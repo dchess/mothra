@@ -46,7 +46,14 @@
 
     </div>
     <div class="row pt-3">
-        <div class="col-sm-3 offset-sm-6">
+        <div class="col-sm-3">
+            <button type="button" id="delete-btn" class="btn btn-lg btn-danger btn-block" data-toggle="modal"
+                data-target="#delete-confirm">
+                Delete
+            </button>
+
+        </div>
+        <div class="col-sm-3 offset-sm-3">
             <a href="{% url "profile" %}" class="btn btn-lg btn-light btn-block">Cancel</a>
         </div>
         <div class="col-sm-3">
@@ -55,12 +62,15 @@
     </div>
 
 </form>
-
+{% include "usage_confirm_delete.html" %}
 {% endblock %}
 
 {% block scripts %}
 <script>
     $(function () {
+        $('#delete-btn').click(function () {
+            $('#confirm-delete').modal('show');
+        });
         $("#{{ form.product.id_for_label }}").addClass("form-control");
         $("#{{ form.how_push.id_for_label }}").addClass("form-control");
         $("#{{ form.how_pull.id_for_label }}").addClass("form-control");

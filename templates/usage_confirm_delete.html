@@ -1,0 +1,23 @@
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="confirm-delete-label"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="{% url "delete_review" object.id %}">
+                <div class="modal-body">
+                    {% csrf_token %}
+                    <p>Are you sure you want to delete your usage review of {{ object.product }}?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light btn-lg" data-dismiss="modal">No</button>
+                    <input type="submit" class="btn btn-danger btn-lg" value="Yes">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

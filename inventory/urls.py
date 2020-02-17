@@ -17,5 +17,6 @@ urlpatterns = [
     path("products/create/", views.ProductCreate.as_view(), name="create_product"),
     path("reviews/create/", views.UsageCreate.as_view(), name="create_review"),
     path("reviews/<int:pk>/edit/", views.UsageUpdate.as_view(), name="edit_review"),
+    path("reviews/<int:pk>/delete/", views.UsageDelete.as_view(), name="delete_review"),
 ]
 
