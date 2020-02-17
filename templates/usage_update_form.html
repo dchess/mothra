@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="post" class="col-sm-6 offset-sm-3 my-3 edit-form">
+    {% csrf_token %}
+    <h4 class="text-muted text-center pb-3">Add Product Review</h4>
+    <div class="row">
+        <div class="col">
+            <label for="{{ form.product.id_for_label }}">Product</label>
+            {{ form.product }}
+        </div>
+        <div class="col">
+            <label for="{{ form.usage_type.id_for_label }}">Type</label>
+            {{ form.usage_type }}
+        </div>
+    </div>
+    <input type="text" value="{{ user.profile.id }}" name="{{ form.reviewer.html_name }}"
+        id="{{ form.reviewer.id_for_label }}" hidden>
+    <input type="text" value="{{ user.profile.organization.id }}" name="{{ form.organization.html_name }}"
+        id="{{ form.organization.id_for_label }}" hidden>
+    <div class="row pt-3">
+        <div class=" col">
+            <label for="{{ form.how_pull.id_for_label }}">How Pull</label>
+            {{ form.how_pull }}
+        </div>
+        <div class="col">
+            <label for="{{ form.how_push.id_for_label }}">How Push</label>
+            {{ form.how_push }}
+        </div>
+    </div>
+    <div class="row pt-3">
+        <div class="col" id="deprecation-date" style="display: none;">
+            <label for="{{ form.when_deprecated.id_for_label }}">Deprecation Date</label>
+            <input type="date" class="form-control" name="{{ form.when_deprecated.html_name }}"
+                id="{{ form.when_deprecated.id_for_label}}">
+        </div>
+        <div class="form-check col text-right">
+            {{ form.is_deprecated }}
+            <label for="{{ form.is_deprecated.id_for_label }}" class="form-check-label">Deprecated?</label>
+        </div>
+    </div>
+    <div class="row pt-3" id="deprecation-reason" style="display: none;">
+        <div class=" col">
+            <label for="{{ form.why_deprecated.id_for_label }}">Deprecation Reason</label>
+            {{ form.why_deprecated }}
+        </div>
+
+    </div>
+    <div class="row pt-3">
+        <div class="col-sm-3">
+            <button type="button" id="delete-btn" class="btn btn-lg btn-danger btn-block" data-toggle="modal"
+                data-target="#delete-confirm">
+                Delete
+            </button>
+
+        </div>
+        <div class="col-sm-3 offset-sm-3">
+            <a href="{% url "profile" %}" class="btn btn-lg btn-light btn-block">Cancel</a>
+        </div>
+        <div class="col-sm-3">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+        </div>
+    </div>
+
+</form>
+{% include "usage_confirm_delete.html" %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(function () {
+        $('#delete-btn').click(function () {
+            $('#confirm-delete').modal('show');
+        });
+        $("#{{ form.product.id_for_label }}").addClass("form-control");
+        $("#{{ form.how_push.id_for_label }}").addClass("form-control");
+        $("#{{ form.how_pull.id_for_label }}").addClass("form-control");
+        $("#{{ form.usage_type.id_for_label }}").addClass("form-control");
+        $("#{{ form.why_deprecated.id_for_label }}").addClass("form-control");
+        $("#{{ form.is_deprecated.id_for_label }}").addClass("form-check-input");
+        $("#{{ form.is_deprecated.id_for_label }}").click(function () {
+            $("#deprecation-date").toggle();
+            $("#deprecation-reason").toggle();
+        });
+    })
+</script>
+{% endblock %}

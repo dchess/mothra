@@ -1,8 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView
-from django.views.generic.edit import CreateView, UpdateView
-from django.urls import reverse
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.urls import reverse, reverse_lazy
 from rest_framework import viewsets
 from .models import Domain, Subject, Product, UsageType, Usage
 from .serializers import (
@@ -43,6 +43,21 @@ class UsageCreate(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse("profile")
+
+
+class UsageUpdate(LoginRequiredMixin, UpdateView):
+    model = Usage
+    fields = "__all__"
+    template_name = "usage_update_form.html"
+
+    def get_success_url(self):
+        return reverse("profile")
+
+
+class UsageDelete(LoginRequiredMixin, DeleteView):
+    model = Usage
+    template_name = "usage_confirm_delete.html"
+    success_url = reverse_lazy("profile")
 
 
 class DomainViewSet(viewsets.ModelViewSet):
