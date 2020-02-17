@@ -1,24 +1,14 @@
 
-html,body,main  {
-  height: 100%;
+body, .sticky-footer-wrapper {
+  min-height:100vh;
 }
 
-#login-form {
-  height: 100%;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-align: center;
-  align-items: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #f5f5f5;
+.flex-fill {
+  flex:1 1 auto;
 }
 
 .form-signin {
-  width: 100%;
-  max-width: 330px;
-  padding: 15px;
-  margin: auto;
+  margin-top: 15%;
 }
 
 .form-signin .form-control {
@@ -40,11 +30,6 @@ html,body,main  {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-}
-
-.footer > .container {
-  padding-left: 15px;
-  padding-right: 15px;
 }
 
 .profile-pic {
