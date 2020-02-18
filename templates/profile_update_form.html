@@ -1,19 +1,42 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="jumbotron col-sm-6 offset-sm-3 mt-5">
-    <form method="post">
+    <form method="post" action="{% url "edit_profile" %}">
         {% csrf_token %}
         <h4 class="text-muted text-center pb-3">Edit Profile for <strong>{{ profile.user }}</strong></h4>
-        <label for="{{ form.github_id.id_for_label }}">Github Username</label>
-        <input type="text" class="form-control" name="{{ form.github_id.html_name }}" autofocus
-            id="{{ form.github_id.id_for_label }}" {%if form.github_id.value %}value="{{ form.github_id.value }}"
-            {% endif %}>
-        <div class="form-group pt-3">
-            <label for="{{ form.organization.id_for_label }}">Organization</label>
-            {{ form.organization }}
+        <div class="form-row form-group">
+            <div class="col">
+                <label for="{{ user_form.first_name.id_for_label }}">First Name</label>
+                <input type="text" class="form-control" id="{{ user_form.first_name.id_for_label }}"
+                    name="{{ user_form.first_name.html_name }}" value="{{ user_form.first_name.value }}">
+            </div>
+            <div class="col">
+                <label for="{{ user_form.last_name.id_for_label }}">Last Name</label>
+                <input type="text" class="form-control" id="{{ user_form.last_name.id_for_label }}"
+                    name="{{ user_form.last_name.html_name }}" value="{{ user_form.last_name.value }}">
+            </div>
         </div>
-        <div class="row">
-            <div class="col-sm-3 offset-sm-6">
+        <div class="form-group">
+            <label for="{{ user_form.email.id_for_label }}">Email Address</label>
+            <input type="email" class="form-control" id="{{ user_form.email.id_for_label }}"
+                name="{{ user_form.email.html_name }}" value="{{ user_form.email.value }}">
+
+        </div>
+        <div class="form-group">
+            <label for="{{ profile_form.github_id.id_for_label }}">Github Username</label>
+            <input type="text" class="form-control" name="{{ profile_form.github_id.html_name }}" autofocus
+                id="{{ profile_form.github_id.id_for_label }}"
+                {%if profile_form.github_id.value %}value="{{ profile_form.github_id.value }}" {% endif %}>
+        </div>
+        <div class="form-group">
+            <label for="{{ profile_form.organization.id_for_label }}">Organization</label>
+            {{ profile_form.organization }}
+        </div>
+        <div class="row pt-3">
+            <div class="col-sm-4">
+                <a href="{% url "password_change" %}" class="btn btn-lg btn-secondary">Update Password</a>
+            </div>
+            <div class="col-sm-3 offset-sm-2">
                 <a href="{% url "profile" user %}" class="btn btn-lg btn-light btn-block">Cancel</a>
             </div>
             <div class="col-sm-3">
@@ -27,7 +50,7 @@
 {% block scripts %}
 <script>
     $(function () {
-        $("#{{ form.organization.id_for_label }}").addClass("form-control")
+        $("#{{ profile_form.organization.id_for_label }}").addClass("form-control")
     })
 </script>
 {% endblock %}

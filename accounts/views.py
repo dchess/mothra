@@ -2,12 +2,20 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.db import IntegrityError
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView
 from rest_framework import viewsets
 from rest_framework.authtoken.models import Token
-from .models import Organization, Profile, Grade, Location, OrgType
+from .models import (
+    Organization,
+    Profile,
+    Grade,
+    Location,
+    OrgType,
+    UserProfileForm,
+    ProfileForm,
+)
 from inventory.models import Usage
 from .serializers import (
     UserSerializer,
@@ -51,10 +59,26 @@ class MemberList(LoginRequiredMixin, ListView):
     template_name = "members.html"
 
 
-class ProfileUpdate(LoginRequiredMixin, UpdateView):
-    model = Profile
-    fields = ["github_id", "organization"]
-    template_name = "profile_update_form.html"
+@login_required
+def edit_profile(request):
+    if request.method == "POST":
+        print(request.POST)
+        user_form = UserProfileForm(instance=request.user, data=request.POST)
+        profile_form = ProfileForm(instance=request.user.profile, data=request.POST)
+
+        if all([user_form.is_valid(), profile_form.is_valid()]):
+            user = user_form.save()
+            profile = profile_form.save()
+            return redirect("profile")
+    else:
+        user_form = UserProfileForm(instance=request.user)
+        profile_form = ProfileForm(instance=request.user.profile)
+
+    return render(
+        request,
+        "profile_update_form.html",
+        {"user_form": user_form, "profile_form": profile_form},
+    )
 
 
 class OrgList(LoginRequiredMixin, ListView):

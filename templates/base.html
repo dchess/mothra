@@ -17,18 +17,20 @@
     <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}" media="screen,projection" />
 </head>
 
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column sticky-footer-wrapper">
     <header>
         {% include '_navbar.html' %}
     </header>
 
-    <main role="main" class="flex-shrink-0">
+    <main role="main" class="container-fluid flex-fill">
         {% block content %}
         {% endblock %}
-    </main><!-- /.container -->
+    </main>
 
-    <footer class="footer mt-auto py-3 bg-dark">
-        {% include '_footer.html' %}
+    <footer class="footer">
+        <div class="container-fluid sticky-bottom bg-dark mt-3 py-3">
+            {% include '_footer.html' %}
+        </div>
     </footer>
     <!-- Bootstrap core JavaScript
     ================================================== -->

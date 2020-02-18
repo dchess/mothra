@@ -1,0 +1,26 @@
+{% for product in object_list %}
+<div class="row">
+    <div class="col-sm-6 offset-sm-2">
+        <h6><a href="{% url "product" product.id %}">{{ product.name }}</a></h6>
+    </div>
+    <div class="col-sm-2 text-right">
+        <a href="#" class="btn btn-sm text-muted">
+            <i class="fas fa-users pr-1"></i>
+            {{ product.usage_set.count }}
+        </a>
+    </div>
+</div>
+<div class="row text-muted small">
+    <div class="col-sm-3 offset-sm-2">
+        <i class="fas fa-circle fa-sm" style="color: {{ product.domain.color }}"></i>
+        {{ product.domain }}
+    </div>
+    <div class="col-sm-2">
+        {% if product.subject %}
+        <i class="{{ product.subject.icon }} fa-sm pr-1"></i>
+        {{ product.subject }}
+        {% endif %}
+    </div>
+</div>
+<hr class="col-sm-8 offset-sm-2">
+{% endfor %}
