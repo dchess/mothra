@@ -173,10 +173,9 @@ def test_profile_github_id_max_length(profile):
         profile.full_clean()
 
 
-def test_profile_organization_is_required(profile):
-    with pytest.raises(ValidationError):
-        profile.organization = None
-        profile.full_clean()
+def test_profile_organization_is_not_required(profile):
+    profile.organization = None
+    profile.full_clean()
 
 
 def test_profile_user_is_required(profile):

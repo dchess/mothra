@@ -101,8 +101,6 @@
             "product": 1,
             "organization": 1,
             "reviewer": 1,
-            "can_push": true,
-            "can_pull": true,
             "usage_type": 1,
             "is_deprecated": false
         }
