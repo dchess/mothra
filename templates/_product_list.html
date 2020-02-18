@@ -21,20 +21,6 @@
         {{ product.subject }}
         {% endif %}
     </div>
-    {% for review in product.usage_set.all %}
-    {% if review.reviewer == profile %}
-    <div class="col-sm-2 offset-sm-2 text-right">
-        <span class="small pr-2">
-            <i class="fas fa-upload pr-1"></i>
-            {{ review.how_push }}
-        </span>
-        <span class="small">
-            <i class="fas fa-download pr-1"></i>
-            {{ review.how_pull }}
-        </span>
-    </div>
-    {% endif %}
-    {% endfor %}
 </div>
 <hr class="col-sm-8 offset-sm-2">
 {% endfor %}
