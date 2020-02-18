@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-sm-6 offset-sm-2">
-            <h2 class="text-muted py-3">Organizations</h2>
-        </div>
-        <div class="col-sm-2 pt-3">
-            <a href="{% url "create_org" %}" class="btn btn-sm btn-outline-primary pull-right btn-block">
-                <i class="fas fa-plus"></i>
-                Add Org
-            </a>
-        </div>
+<div class="row">
+    <div class="col-sm-6 offset-sm-2">
+        <h2 class="text-muted py-3">Organizations</h2>
     </div>
-    <div class="row">
-        <div class="col-sm-8 offset-sm-2">
-            <div class="list-group">
-                {% for org in object_list %}
+    <div class="col-sm-2 pt-3">
+        <a href="{% url "create_org" %}" class="btn btn-sm btn-outline-primary pull-right btn-block">
+            <i class="fas fa-plus"></i>
+            Add Org
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-8 offset-sm-2">
+        <div class="list-group list-group-flush">
+            {% for org in object_list %}
+            <div class="list-group-item">
                 <div class="row">
-                    <div class="col-sm list-group-item mb-2">
+                    <div class="col-sm-10">
                         <h5>{{ org.name }}
                             {% if user.profile.organization == org %}
                             <a href="{% url "edit_org" org.id %}" class="edit-btn text-muted">
@@ -25,19 +25,26 @@
                             </a>
                             {% endif %}
                         </h5>
-
-                        <span class="text-dark">Type: </span>
-                        <span class="text-muted small">{{ org.org_type }}</span><br>
-                        <span class="text-dark">Grades: </span>
-                        <span class="text-muted small">{{ org.grade_range }}</span><br>
-                        <span class="text-dark"># of Schools: </span>
-                        <span class="text-muted small">{{ org.size }}</span><br>
-                        <span class="text-dark">Locations: </span>
-                        <span class="text-muted small">{{ org.locations.all|join:", " }}</span>
+                    </div>
+                    <div class="col-sm-2 text-muted small text-right">
+                        <i class="fas fa-building"></i>
+                        {{ org.size }}
                     </div>
                 </div>
-                {% endfor %}
+                <div class="row">
+                    <div class="col-sm-10 text-muted small">
+                        {% for location in org.locations.all %}{% if forloop.first %}{% else %}{% if forloop.last %} and
+                        {% else %},{% endif %}{% endif %}{{ location }}{% endfor %}
+                    </div>
+                    <div class=" col-sm-2 text-muted small text-right">
+                        <i class="fas fa-user-graduate"></i>
+                        {{ org.grade_range }}
+                    </div>
+                </div>
+
+
             </div>
+            {% endfor %}
         </div>
     </div>
 </div>
