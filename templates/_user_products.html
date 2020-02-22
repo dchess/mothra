@@ -1,6 +1,6 @@
 <div class=" tab-pane fade show active" id="products" role="tabpanel" aria-labelledby="products-tab">
     {% include "_user_product_search.html" %}
-    {% for product in profile.products.all %}
+    {% for product in products %}
     <div class="row">
         <div class="col-sm-10">
             <h6><a href="{% url "product" product.id %}">{{ product.name }}</a></h6>

@@ -33,18 +33,19 @@ class ProfileDetail(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        try:
-            if context["profile"].user == self.request.user:
-                context["token"] = Token.objects.get(user=self.request.user)
-            else:
-                context["token"] = None
-            usages = Usage.objects.filter(reviewer=context["profile"])
-            context["domains"] = set([u.product.domain for u in usages])
-            context["usage_types"] = set([u.usage_type for u in usages])
-        except Token.DoesNotExist:
-            context["token"] = None
-        except Usage.DoesNotExist:
-            context["usage_types"] = context["domains"] = None
+        if context["profile"].user == self.request.user:
+            context["token"] = Token.objects.get(user=self.request.user) or None
+        search = self.request.GET.get("search")
+        if search:
+            context["products"] = (
+                context["profile"]
+                .products.annotate(
+                    search=SearchVector("name", "domain__name", "subject__name")
+                )
+                .filter(search__icontains=search)
+            )
+        else:
+            context["products"] = context["profile"].products.all()
         return context
 
     def get_object(self):

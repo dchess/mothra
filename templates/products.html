@@ -15,7 +15,7 @@
     </div>
     <div class="row pb-3">
         <div class="col">
-            <input type="text" class="form-control" id="member-search" placeholder="Find a product...">
+            <input type="text" class="form-control" id="product-search" placeholder="Find a product...">
         </div>
     </div>
     {% include "_product_list.html" %}
@@ -27,12 +27,12 @@
 
 {% block scripts %}
 <script>
-    $('#member-search').bind("enterKey", function (e) {
-        var url = "{% url "products" %}";
+    $('#product-search').bind("enterKey", function (e) {
+        var url = window.location.href.split('?')[0];
         var term = this.value;
         window.location.href = url + '?search=' + term;
     });
-    $('#member-search').keyup(function (e) {
+    $('#product-search').keyup(function (e) {
         if (e.keyCode == 13) {
             $(this).trigger("enterKey");
         }
