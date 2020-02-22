@@ -29,5 +29,19 @@ def sentiment_color(value):
     return sentiments.get(value)
 
 
+@register.filter
+def nps_rating(value):
+    value = int(value)
+    if value < 0:
+        color = "badge-danger"
+    elif value < 50:
+        color = "badge-warning"
+    else:
+        color = "badge-success"
+    return color
+
+
 register.filter("sentiment_icon", sentiment_icon)
 register.filter("sentiment_color", sentiment_color)
+register.filter("nps_rating", nps_rating)
+

@@ -47,8 +47,8 @@
                     {% endif %}
                     <div class="row pt-3">
                         <div class="col">
-                            <span class="badge badge-success px-2">
-                                <p class="nps">40</p>
+                            <span class="badge {{ NPS| nps_rating }} px-2">
+                                <p class="nps">{{ NPS }}</p>
                                 <span class="small">NPS</span>
                             </span>
                         </div>
