@@ -27,6 +27,17 @@
             $('#api-token').toggle();
             $('#token-text').toggle();
         });
+
+        $('#product-search').bind("enterKey", function (e) {
+            var url = window.location.href.split('?')[0];
+            var term = this.value;
+            window.location.href = url + '?search=' + term;
+        });
+        $('#product-search').keyup(function (e) {
+            if (e.keyCode == 13) {
+                $(this).trigger("enterKey");
+            }
+        });
     })
 </script>
 {% endblock %}

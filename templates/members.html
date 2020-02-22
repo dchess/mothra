@@ -45,7 +45,7 @@
 {% block scripts %}
 <script>
     $('#member-search').bind("enterKey", function (e) {
-        var url = "{% url "members" %}";
+        var url = window.location.href.split('?')[0];
         var term = this.value;
         window.location.href = url + '?search=' + term;
     });
