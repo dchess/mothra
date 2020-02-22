@@ -9,7 +9,12 @@
             <div class="card mt-3" style="width: 18rem;">
                 <div class="card-body">
                     <div class="row">
-                        <h5 class="col-sm-9 card-title">{{ product.name }}</h5>
+                        <h5 class="col-sm-7 card-title">{{ product.name }}</h5>
+                        <div class="col-sm-2">
+                            <a href="{% url "edit_product" product.id %}">
+                                <i class="far fa-edit text-muted"></i>
+                            </a>
+                        </div>
                         <div class="col-sm-2 text-right">
                             <a href="#" class="btn btn-sm text-muted">
                                 <i class="fas fa-users pr-1"></i>
@@ -23,9 +28,7 @@
                             {{ product.domain }}
                         </div>
                     </div>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's
-                        content.</p>
+                    <p class="card-text small">{{ product.description }}</p>
 
                     <div class="row text-muted small">
                         <div class="col">
@@ -35,7 +38,14 @@
                             {% endif %}
                         </div>
                     </div>
-                    <div class="row">
+                    {% if product.url %}
+                    <div class="row small">
+                        <div class="col">
+                            <a href="{{ product.url }}">{{ product.url }}</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="row pt-3">
                         <div class="col">
                             <span class="badge badge-success px-2">
                                 <p class="nps">40</p>
