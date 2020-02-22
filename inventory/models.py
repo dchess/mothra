@@ -2,6 +2,7 @@ from datetime import date
 from django.db import models
 from django.contrib import admin
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.urls import reverse
 from accounts.models import Organization, Profile
 
@@ -34,6 +35,8 @@ class Product(models.Model):
     subject = models.ForeignKey(
         Subject, on_delete=models.PROTECT, null=True, blank=True
     )
+    description = models.TextField(blank=True)
+    url = models.URLField(max_length=2000, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -93,6 +96,10 @@ class Usage(models.Model):
     is_deprecated = models.BooleanField()
     when_deprecated = models.DateField(blank=True, null=True)
     why_deprecated = models.TextField(blank=True, null=True)
+    rating = models.IntegerField(
+        validators=[MaxValueValidator(5), MinValueValidator(1)]
+    )
+    review = models.TextField(blank=True)
 
     def __str__(self):
         return f"{self.organization} - {self.product}"

@@ -28,6 +28,20 @@
         </div>
     </div>
     <div class="row pt-3">
+        <label for="{{ form.rating.id_for_label }}" class="pl-3">Rating</label>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            {% for i in "xxxxx" %}
+            {% include "_sentiment_button.html" with rating=forloop.counter %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row pt-3">
+        <div class="col">
+            <label for="{{ form.review.id_for_label }}">Review Comments</label>
+            {{ form.review }}
+        </div>
+    </div>
+    <div class="row pt-3">
         <div class="col" id="deprecation-date" style="display: none;">
             <label for="{{ form.when_deprecated.id_for_label }}">Deprecation Date</label>
             <input type="date" class="form-control" name="{{ form.when_deprecated.html_name }}"
@@ -65,13 +79,12 @@
 {% include "usage_confirm_delete.html" %}
 {% endblock %}
 
+
 {% block scripts %}
 <script>
     $(function () {
-        $('#delete-btn').click(function () {
-            $('#confirm-delete').modal('show');
-        });
         $("#{{ form.product.id_for_label }}").addClass("form-control");
+        $("#{{ form.review.id_for_label }}").addClass("form-control");
         $("#{{ form.how_push.id_for_label }}").addClass("form-control");
         $("#{{ form.how_pull.id_for_label }}").addClass("form-control");
         $("#{{ form.usage_type.id_for_label }}").addClass("form-control");
@@ -81,6 +94,10 @@
             $("#deprecation-date").toggle();
             $("#deprecation-reason").toggle();
         });
+        $('.feedback-btn').click(function () {
+            $('.sentiment-icon').removeClass('fas').addClass('far');
+            $(this).find('i.far').removeClass('far').addClass('fas');
+        })
     })
 </script>
 {% endblock %}

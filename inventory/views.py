@@ -45,6 +45,15 @@ class ProductDetail(LoginRequiredMixin, DetailView):
     model = Product
     template_name = "product.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        reviews = Usage.objects.filter(product=self.get_object())
+        total_reviews = float(reviews.count())
+        promoters = (reviews.filter(rating=5).count() / total_reviews) * 100
+        detractors = (reviews.filter(rating__lte=3).count() / total_reviews) * 100
+        context["NPS"] = int(promoters - detractors)
+        return context
+
 
 class UsageCreate(LoginRequiredMixin, CreateView):
     model = Usage
