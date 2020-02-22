@@ -1,18 +1,41 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="row">
-    <div class="col-sm-6 offset-sm-2">
-        <h2 class="text-muted py-3">Products</h2>
+<div class="col-sm-8 offset-sm-2">
+
+    <div class="row">
+        <div class="col-sm-9">
+            <h2 class="text-muted py-3">Products</h2>
+        </div>
+        <div class="col-sm-3 pt-3">
+            <a href="{% url "create_product" %}" class="btn btn-sm btn-outline-primary pull-right btn-block">
+                <i class="fas fa-plus"></i>
+                Add Product
+            </a>
+        </div>
     </div>
-    <div class="col-sm-2 pt-3">
-        <a href="{% url "create_product" %}" class="btn btn-sm btn-outline-primary pull-right btn-block">
-            <i class="fas fa-plus"></i>
-            Add Product
-        </a>
+    <div class="row pb-3">
+        <div class="col">
+            <input type="text" class="form-control" id="member-search" placeholder="Find a product...">
+        </div>
     </div>
+    {% include "_product_list.html" %}
 </div>
 
 
-{% include "_product_list.html" %}
 
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $('#member-search').bind("enterKey", function (e) {
+        var url = "{% url "products" %}";
+        var term = this.value;
+        window.location.href = url + '?search=' + term;
+    });
+    $('#member-search').keyup(function (e) {
+        if (e.keyCode == 13) {
+            $(this).trigger("enterKey");
+        }
+    });
+</script>
 {% endblock %}

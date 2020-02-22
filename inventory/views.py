@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.postgres.search import SearchVector
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -15,8 +16,17 @@ from .serializers import (
 
 
 class ProductList(LoginRequiredMixin, ListView):
-    model = Product
     template_name = "products.html"
+
+    def get_queryset(self):
+        try:
+            search = self.request.GET["search"]
+            products = Product.objects.annotate(
+                search=SearchVector("name", "domain__name", "subject__name")
+            ).filter(search__icontains=search)
+            return products
+        except KeyError:
+            return Product.objects.all()
 
 
 class ProductUpdate(LoginRequiredMixin, UpdateView):
