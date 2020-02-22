@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.contrib.postgres.search import SearchVector
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import DetailView, ListView
@@ -55,8 +56,26 @@ class ProfileDetail(LoginRequiredMixin, DetailView):
 
 
 class MemberList(LoginRequiredMixin, ListView):
-    model = Profile
     template_name = "members.html"
+
+    def get_queryset(self):
+        try:
+            search = self.request.GET["search"]
+            users = (
+                User.objects.annotate(
+                    search=SearchVector(
+                        "first_name",
+                        "last_name",
+                        "email",
+                        "profile__organization__name",
+                    )
+                )
+                .filter(search__icontains=search)
+                .order_by("first_name", "last_name")
+            )
+            return users
+        except KeyError:
+            return User.objects.all().order_by("first_name", "last_name")
 
 
 @login_required

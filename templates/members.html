@@ -1,25 +1,37 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="col-sm-8 offset-sm-2">
-    <h2 class="text-muted py-3">Members</h2>
+    <div class="text-muted py-3">
+        <h3 style="display: inline-block">Members</h3>
+        <span class="badge badge-light badge-pill text-muted" style="vertical-align: top">{{ object_list.count }}</span>
+    </div>
+    <div class="pb-3">
+        <input type="text" class="form-control" id="member-search" placeholder="Find a member...">
+    </div>
     <div class="list-group list-group-flush">
-        {% for profile in object_list %}
-        <a href="{% url "profile" profile.user %}" class="list-group-item list-group-item-action">
+        {% for user in object_list %}
+        <a href="{% url "profile" user %}" class="list-group-item list-group-item-action">
             <div class="d-flex justify-content-between">
                 <div class="row">
                     <div>
-                        <img src="https://github.com/{{ profile.github_id}}.png" class="profile-pic mx-3">
+                        {% if user.profile.github_id %}
+                        <img src="https://github.com/{{ user.profile.github_id}}.png" class="profile-pic mx-3">
+                        {% else %}
+                        <div class="mx-3 bg-secondary profile-pic text-center">
+                            <i class="fa fa-user pt-2 fa-inverse" style="font-size:1.8rem"></i>
+                        </div>
+                        {% endif %}
                     </div>
                     <div>
-                        <strong>{{ profile.user.first_name }} {{ profile.user.last_name }}</strong>
+                        <strong>{{ user.first_name }} {{ user.last_name }}</strong>
                         <p>
-                            {{ profile.organization }}
+                            {{ user.profile.organization }}
                         </p>
                     </div>
                 </div>
                 <span class="text-muted small">
                     <i class="fas fa-project-diagram"></i>
-                    {{ profile.products.count }}
+                    {{ user.profile.products.count }}
                 </span>
             </div>
 
@@ -28,4 +40,19 @@
         {% endfor %}
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $('#member-search').bind("enterKey", function (e) {
+        var url = "{% url "members" %}";
+        var term = this.value;
+        window.location.href = url + '?search=' + term;
+    });
+    $('#member-search').keyup(function (e) {
+        if (e.keyCode == 13) {
+            $(this).trigger("enterKey");
+        }
+    });
+</script>
 {% endblock %}
