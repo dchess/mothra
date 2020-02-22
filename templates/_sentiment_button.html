@@ -1,0 +1,6 @@
+{% load inventory_helpers %}
+<label class="feedback-btn btn col-sm-2 {% if rating == 1 %}offset-sm-1{% endif %}" id="sentiment-label{{ rating }}"
+    for="sentiment{{ rating }}">
+    <input type="radio" name="rating" id="sentiment{{ rating }}" value="{{ rating }}" required>
+    <i class=" sentiment-icon far {{ rating|sentiment_icon }} {{ rating|sentiment_color }} fa-3x"></i>
+</label>
