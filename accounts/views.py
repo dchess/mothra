@@ -61,11 +61,18 @@ class MemberList(LoginRequiredMixin, ListView):
     def get_queryset(self):
         try:
             search = self.request.GET["search"]
-            users = User.objects.annotate(
-                search=SearchVector(
-                    "first_name", "last_name", "email", "profile__organization__name"
+            users = (
+                User.objects.annotate(
+                    search=SearchVector(
+                        "first_name",
+                        "last_name",
+                        "email",
+                        "profile__organization__name",
+                    )
                 )
-            ).filter(search__icontains=search)
+                .filter(search__icontains=search)
+                .order_by("first_name", "last_name")
+            )
             return users
         except KeyError:
             return User.objects.all().order_by("first_name", "last_name")
