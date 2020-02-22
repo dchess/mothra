@@ -35,6 +35,8 @@ class Product(models.Model):
     subject = models.ForeignKey(
         Subject, on_delete=models.PROTECT, null=True, blank=True
     )
+    description = models.TextField(blank=True)
+    url = models.URLField(max_length=2000, blank=True, null=True)
 
     def __str__(self):
         return self.name
