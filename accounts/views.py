@@ -34,7 +34,10 @@ class ProfileDetail(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if context["profile"].user == self.request.user:
-            context["token"] = Token.objects.get(user=self.request.user) or None
+            try:
+                context["token"] = Token.objects.get(user=self.request.user)
+            except Token.DoesNotExist:
+                context["token"] = None
         search = self.request.GET.get("search")
         if search:
             context["products"] = (
