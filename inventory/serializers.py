@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Domain, Subject, Product, UsageType, Usage
+from .models import Domain, Subject, Product, UsageType, Usage, DataInterface
 
 
 class DomainSerializer(serializers.ModelSerializer):
@@ -29,4 +29,10 @@ class UsageTypeSerializer(serializers.ModelSerializer):
 class UsageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usage
+        fields = "__all__"
+
+
+class DataInterfaceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DataInterface
         fields = "__all__"
