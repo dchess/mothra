@@ -5,13 +5,14 @@ from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.urls import reverse, reverse_lazy
 from rest_framework import viewsets
-from .models import Domain, Subject, Product, UsageType, Usage
+from .models import Domain, Subject, Product, UsageType, Usage, DataInterface
 from .serializers import (
     DomainSerializer,
     SubjectSerializer,
     ProductSerializer,
     UsageTypeSerializer,
     UsageSerializer,
+    DataInterfaceSerializer,
 )
 
 
@@ -103,3 +104,8 @@ class UsageTypeViewSet(viewsets.ModelViewSet):
 class UsageViewSet(viewsets.ModelViewSet):
     queryset = Usage.objects.all()
     serializer_class = UsageSerializer
+
+
+class DataInterfaceViewSet(viewsets.ModelViewSet):
+    queryset = DataInterface.objects.all()
+    serializer_class = DataInterfaceSerializer

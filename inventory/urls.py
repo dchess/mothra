@@ -8,6 +8,7 @@ router.register(r"subjects", views.SubjectViewSet)
 router.register(r"products", views.ProductViewSet)
 router.register(r"usagetypes", views.UsageTypeViewSet)
 router.register(r"usages", views.UsageViewSet)
+router.register(r"data_interfaces", views.DataInterfaceViewSet)
 
 
 urlpatterns = [
@@ -19,4 +20,3 @@ urlpatterns = [
     path("reviews/<int:pk>/edit/", views.UsageUpdate.as_view(), name="edit_review"),
     path("reviews/<int:pk>/delete/", views.UsageDelete.as_view(), name="delete_review"),
 ]
-
